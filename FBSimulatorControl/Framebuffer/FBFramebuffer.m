@@ -175,6 +175,11 @@ static IOSurfaceRef extractSurfaceFromUnknown(id unknown)
     if (![descriptor conformsToProtocol:@protocol(SimDisplayIOSurfaceRenderable)]) {
       continue;
     }
+    if (!descriptor.ioSurface) {
+      // Magic Pod specific logic.
+      // Without this check, sometimes "fbsimctl stream" does not start streaming for Xcode11 or later.
+      continue;
+    }
     return [[FBFramebuffer_IOClient alloc] initWithIOClient:ioClient port:port surface:descriptor logger:logger];
   }
   return [[FBSimulatorError
