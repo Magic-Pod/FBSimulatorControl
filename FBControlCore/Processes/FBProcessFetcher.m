@@ -93,7 +93,7 @@ static inline FBProcessInfo *ProcessInfoForProcessIdentifier(pid_t processIdenti
   currentPosition += 1;
 
   // Move through the padding to get to the the argv
-  while (*currentPosition == NULL) {
+  while (*currentPosition == '\0') {
     currentPosition++;
   }
 
@@ -111,7 +111,7 @@ static inline FBProcessInfo *ProcessInfoForProcessIdentifier(pid_t processIdenti
 
   // Now the environment is here
   NSMutableDictionary *environment = [NSMutableDictionary dictionary];
-  while (currentPosition != NULL) {
+  while (currentPosition != '\0') {
     NSString *string = [[NSString alloc] initWithCString:currentPosition encoding:NSASCIIStringEncoding];
     NSArray *tokens = [string componentsSeparatedByString:@"="];
     // If we don't get 2 tokens, something is malformed.
